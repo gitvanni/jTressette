@@ -33,7 +33,7 @@ The project features a graphical user interface (GUI) built with JavaFX and impl
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/gitvanni/jtressette.git](https://github.com/gitvanni/jtressette.git)
+    git clone https://github.com/gitvanni/jtressette.git
     cd jtressette
     ```
 
