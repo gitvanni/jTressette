@@ -22,35 +22,15 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.tressette.core;
-
-import java.util.Comparator;
+package it.unicam.cs.tressette.cards;
 
 /**
- * This enum is used to represent the rank of a card.
- * Each rank has associated an integer value.
+ * This enum represent the suit of a card.
+ *
  */
-public enum Rank{
-    ACE(8),
-    TWO(9),
-    THREE(10),
-    FOUR(1),
-    FIVE(2),
-    SIX(3),
-    SEVEN(4),
-    JACK(5),
-    KNIGHT(6),
-    KING(7);
-
-    private final int value;
-
-    Rank(int value) {
-        this.value=value;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public static final Comparator<Rank> BY_VALUE = Comparator.comparingInt(Rank::getValue);
+public enum Suit {
+    SPADE,
+    BASTONI,
+    DENARI,
+    COPPE
 }

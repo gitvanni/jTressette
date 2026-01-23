@@ -22,35 +22,35 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.tressette.core;
+package it.unicam.cs.tressette.cards;
 
-import com.lostrucos.jabtbg.core.Strategy;
+import java.util.Comparator;
 
-import java.util.*;
-import java.util.stream.Collectors;
+/**
+ * This enum is used to represent the rank of a card.
+ * Each rank has associated an integer value.
+ */
+public enum Rank{
+    ACE(8),
+    TWO(9),
+    THREE(10),
+    FOUR(1),
+    FIVE(2),
+    SIX(3),
+    SEVEN(4),
+    JACK(5),
+    KNIGHT(6),
+    KING(7);
 
-public class BasicTressetteStrategy implements Strategy<TressetteGameState,TressetteAction> {
+    private final int value;
 
-    private List<TressetteStrategy> strategies;
-
-    public BasicTressetteStrategy(){
-        strategies = Arrays.asList(
-                new HigherCardStrategy()
-        );
-    }
-    @Override
-    public double calculateUtility(TressetteGameState state, int playerIndex) {
-        return 0;
-    }
-
-    @Override
-    public List<TressetteAction> suggestStrategicMoves(TressetteGameState state, int currentPlayer) {
-        List<TressetteAction> suggestedMoves = new ArrayList<>();
-        for(TressetteStrategy s : strategies){
-            suggestedMoves.add(s.chooseAction(state));
-        }
-        return suggestedMoves;
+    Rank(int value) {
+        this.value=value;
     }
 
+    public int getValue() {
+        return value;
+    }
 
+    public static final Comparator<Rank> BY_VALUE = Comparator.comparingInt(Rank::getValue);
 }

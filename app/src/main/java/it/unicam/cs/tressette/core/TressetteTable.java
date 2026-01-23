@@ -24,6 +24,8 @@
 
 package it.unicam.cs.tressette.core;
 
+import it.unicam.cs.tressette.cards.Card;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

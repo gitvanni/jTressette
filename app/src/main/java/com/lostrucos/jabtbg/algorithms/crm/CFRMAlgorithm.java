@@ -1,7 +1,7 @@
 package com.lostrucos.jabtbg.algorithms.crm;
 
 import com.lostrucos.jabtbg.core.*;
-import it.unicam.cs.tressette.core.BasicTressetteStrategy;
+import it.unicam.cs.tressette.strategies.BasicTressetteStrategy;
 
 import java.util.*;
 
@@ -31,6 +31,15 @@ public class CFRMAlgorithm<T extends GameState<E>, E extends Action> implements 
         this.regretTable = new HashMap<>();
         this.strategyTable = new HashMap<>();
         this.game=game;
+    }
+
+    public CFRMAlgorithm(int numIterations, double regretMatchingWeight,Game<T,E> game,Strategy<T,E> strategy){
+        this.numIterations = numIterations;
+        this.regretMatchingWeight = regretMatchingWeight;
+        this.regretTable = new HashMap<>();
+        this.strategyTable = new HashMap<>();
+        this.game=game;
+        this.strategy=strategy;
     }
 
     @Override
@@ -92,9 +101,10 @@ public class CFRMAlgorithm<T extends GameState<E>, E extends Action> implements 
      */
     private void train(T initialState) {
         int iterations = 0;
-        this.setStrategy((Strategy<T, E>) new BasicTressetteStrategy());
+        //long startTime = System.currentTimeMillis();
+        //this.setStrategy((Strategy<T, E>) new BasicTressetteStrategy());
         for (int i = 0; i < numIterations; i++) {
-            //while(System.currentTimeMillis() - startTime < TIME_LIMIT_MS && iterations < numIterations) {
+          //  while(System.currentTimeMillis() - startTime < TIME_LIMIT_MS && iterations < numIterations) {
             //iterations++;
             for (int player = 0; player < 2; player++) {
                 cfrm(initialState, player, 1.0, 1.0);
@@ -122,6 +132,8 @@ public class CFRMAlgorithm<T extends GameState<E>, E extends Action> implements 
         double expectedUtility = 0;
 
         List<E> actions = this.strategy.suggestStrategicMoves(state,currentPlayer);
+        if(actions.isEmpty())
+            return 0;
 
         //for (E action : infoSet.getPlayerActions(currentPlayer)) {
         for (E action : actions) {
@@ -129,15 +141,24 @@ public class CFRMAlgorithm<T extends GameState<E>, E extends Action> implements 
             double actionProbability = strategy.get(action);
             T copy = game.deepCopy(state);
             T nextState = game.getNextState(copy, action);
-            double utility = cfrm(nextState, player, reachProbability * actionProbability, opponentProbability * actionProbability);
+            double utility;
+            if(currentPlayer==0){
+                 utility = cfrm(nextState, player, reachProbability * actionProbability, opponentProbability);
+            }
+            else
+                utility = cfrm(nextState, player, reachProbability , opponentProbability * actionProbability);
+            //double utility = cfrm(nextState, player, reachProbability * actionProbability, opponentProbability * actionProbability);
             utilities.put(action, utility);
             expectedUtility += actionProbability * utility;
         }
 
         if (currentPlayer == player) {
-            for (E action : infoSet.getPlayerActions(currentPlayer)) {
+            //for (E action : infoSet.getPlayerActions(currentPlayer)) {
+            for (E action : actions) {
                 double regret = utilities.get(action) - expectedUtility;
                 updateRegretSum(infoSet, action, regret * opponentProbability);
+                double newStrategyValue = reachProbability*strategy.get(action);
+                strategy.merge(action,newStrategyValue,Double::sum);
             }
         }
 

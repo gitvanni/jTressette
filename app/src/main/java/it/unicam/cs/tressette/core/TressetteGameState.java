@@ -26,6 +26,7 @@ package it.unicam.cs.tressette.core;
 
 import com.lostrucos.jabtbg.core.GameState;
 import com.lostrucos.jabtbg.core.InformationSet;
+import it.unicam.cs.tressette.cards.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -39,7 +40,7 @@ public class TressetteGameState implements GameState<TressetteAction> {
     private final TressetteTable table;
     private int turn;
 
-    private final Map<Integer,Hand> playerHands;
+    private final Map<Integer, Hand> playerHands;
 
     private final List<Card> drawnCards;
 
@@ -95,6 +96,8 @@ public class TressetteGameState implements GameState<TressetteAction> {
     private void dealCards() {
         this.playerHands.get(0).addToHand(deck.deal(10));
         this.playerHands.get(1).addToHand(deck.deal(10));
+        this.playerHands.get(0).sort();
+        this.playerHands.get(1).sort();
     }
 
 
@@ -123,7 +126,8 @@ public class TressetteGameState implements GameState<TressetteAction> {
 
     @Override
     public boolean isTerminalNode() {
-        return (deck.isEmpty() && table.getPlayerTakes(0).size()+table.getPlayerTakes(1).size() == 40);
+        //return (deck.isEmpty() && (table.getPlayerTakes(0).size()+table.getPlayerTakes(1).size() == 40) );
+        return turn == 20;
     }
 
     @Override
@@ -187,14 +191,14 @@ public class TressetteGameState implements GameState<TressetteAction> {
 
     private GameState<TressetteAction> firstTurn(TressetteAction action){
         table.addCardOnTheTable(action.getCard());
-        System.out.println(table);
+        //System.out.println(table);
         return new TressetteGameState(this.deck,1-currentPlayer,this.table,this.playerHands,this.turn,this.drawnCards);
     }
 
     private GameState<TressetteAction> secondTurn(TressetteAction action){
         int winner = -1;
         table.addCardOnTheTable(action.getCard());
-        System.out.println(table);
+        //System.out.println(table);
         winner = winnerOfTheTrick(1-currentPlayer,table.getCardsOnTheTable().getFirst(),currentPlayer,action.getCard());
         if(turn==19){
             lastTrickWinner=winner;
@@ -213,6 +217,8 @@ public class TressetteGameState implements GameState<TressetteAction> {
         drawnCards.add(second);
         playerHands.get(winner).addToHand(first);
         playerHands.get(1-winner).addToHand(second);
+        playerHands.get(winner).sort();
+        playerHands.get(1-winner).sort();
     }
 
     private int winnerOfTheTrick(int player1,Card card1,int player2, Card card2){

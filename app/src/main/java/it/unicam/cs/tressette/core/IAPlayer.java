@@ -27,6 +27,7 @@ package it.unicam.cs.tressette.core;
 import com.lostrucos.jabtbg.algorithms.crm.CFRMAlgorithm;
 import com.lostrucos.jabtbg.core.Game;
 import com.lostrucos.jabtbg.core.Player;
+import com.lostrucos.jabtbg.core.Strategy;
 
 public class IAPlayer extends TressettePlayer implements Player<TressetteGameState,TressetteAction> {
     private int playerIndex;
@@ -37,6 +38,13 @@ public class IAPlayer extends TressettePlayer implements Player<TressetteGameSta
         super(id);
         this.game = game;
         this.cfrAlgorithm = new CFRMAlgorithm<>(iterations, 1.0,this.game);
+    }
+
+    public IAPlayer(int id, Game<TressetteGameState,TressetteAction> game, int iterations, Strategy<TressetteGameState,TressetteAction> strategy){
+        super (id);
+        this.game = game;
+        this.cfrAlgorithm = new CFRMAlgorithm<>(iterations, 1.0,this.game,strategy);
+
     }
     @Override
     public TressetteAction getAction(TressetteGameState state) {

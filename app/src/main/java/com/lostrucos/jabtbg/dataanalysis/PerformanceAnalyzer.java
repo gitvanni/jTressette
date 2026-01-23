@@ -22,15 +22,14 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.tressette.core;
+package com.lostrucos.jabtbg.dataanalysis;
 
-/**
- * This enum represent the suit of a card.
- *
- */
-public enum Suit {
-    SWORDS,
-    CLUBS,
-    COINS,
-    CUPS
+import com.lostrucos.jabtbg.core.Action;
+import com.lostrucos.jabtbg.core.GameState;
+
+import java.util.List;
+import java.util.Map;
+
+public interface PerformanceAnalyzer<T extends GameState<E>, E extends Action> {
+    Map<String, Object> compareAlgorithms(List<Map<String, Object>> data);
 }

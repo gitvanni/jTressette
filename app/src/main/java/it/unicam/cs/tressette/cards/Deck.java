@@ -22,7 +22,7 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.tressette.core;
+package it.unicam.cs.tressette.cards;
 
 import java.util.ArrayList;
 import java.util.Collections;

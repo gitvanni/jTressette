@@ -25,13 +25,10 @@
 package it.unicam.cs.tressette.core;
 
 import com.lostrucos.jabtbg.core.*;
+import it.unicam.cs.tressette.cards.Hand;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * This class represents a human player in tressette

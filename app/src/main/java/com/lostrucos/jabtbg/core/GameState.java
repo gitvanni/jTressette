@@ -83,4 +83,6 @@ public interface GameState<E extends Action> {
     String toString();
 
     InformationSet<GameState<E>,E> getInfoSet(int playerIndex);
+
+    int getTurn();
 }

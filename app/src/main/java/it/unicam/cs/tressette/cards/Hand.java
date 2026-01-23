@@ -22,11 +22,10 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.tressette.core;
+package it.unicam.cs.tressette.cards;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This class represents a hand of cards held by a player
@@ -78,7 +77,22 @@ public class Hand {
      * This method sorts the hand based off ranks and suits
      */
     public void sort(){
+        cards.sort((c1, c2) -> {
+            // First compare by suit
+            int suitComparison = c1.getSuit().compareTo(c2.getSuit());
+            if (suitComparison != 0) {
+                return suitComparison;
+            }
+            // If suits are the same, compare by rank using the BY_VALUE comparator
+            return Rank.BY_VALUE.compare(c1.getRank(), c2.getRank());
+        });
 
+    }
+
+    public List<Card> getCardsBySuit(Suit suit) {
+        return cards.stream()
+                .filter(card -> card.getSuit() == suit)
+                .collect(Collectors.toList());
     }
 
     public void addToHand(List<Card> cards){

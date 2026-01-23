@@ -24,7 +24,11 @@
 
 package it.unicam.cs.tressette.core;
 
+import java.util.List;
+
 public interface TressetteStrategy {
       TressetteAction chooseAction(TressetteGameState state);
+
+      List<TressetteAction> getActions(TressetteGameState state);
 
 }

@@ -26,6 +26,11 @@ package it.unicam.cs.tressette.core;
 
 import com.lostrucos.jabtbg.core.Game;
 import com.lostrucos.jabtbg.core.InformationSet;
+import it.unicam.cs.tressette.cards.Card;
+import it.unicam.cs.tressette.strategies.AdvancedTressetteStrategy;
+import it.unicam.cs.tressette.strategies.BasicTressetteStrategy;
+import it.unicam.cs.tressette.strategies.OPStrategy;
+import it.unicam.cs.tressette.strategies.OPStrategy2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +54,9 @@ public class TressetteGame implements Game<TressetteGameState,TressetteAction> {
     }
 
     private void initializePlayers() {
-        TressettePlayer player0 = new HumanPlayer(0);
-        TressettePlayer player1 = new IAPlayer(1,this,1);
+        TressettePlayer player0 = new IAPlayer(0,this,1000,new OPStrategy());
+        //TressettePlayer player0 = new HumanPlayer(0);
+        TressettePlayer player1 = new IAPlayer(1,this,1000,new OPStrategy());
         //TressettePlayer player1 = new HumanPlayer(1);
         this.players.add(player0);
         this.players.add(player1);
@@ -95,10 +101,13 @@ public class TressetteGame implements Game<TressetteGameState,TressetteAction> {
     }
 
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "TressetteGame{" +
+                "player 1 score=" + player1Score +
+                ", player 2 score=" + player2Score +
+                '}';
+    }
 
     //TODO: sono i nuovi metodi
     @Override

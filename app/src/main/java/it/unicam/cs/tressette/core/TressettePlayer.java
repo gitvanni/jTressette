@@ -25,6 +25,8 @@
 package it.unicam.cs.tressette.core;
 
 import com.lostrucos.jabtbg.core.Player;
+import it.unicam.cs.tressette.cards.Card;
+import it.unicam.cs.tressette.cards.Hand;
 
 import java.util.List;
 
@@ -57,5 +59,12 @@ public abstract class TressettePlayer implements Player<TressetteGameState,Tress
 
     public Hand getHand(){
         return hand;
+    }
+
+    @Override
+    public String toString() {
+        return "TressettePlayer{" +
+                "id=" + id +
+                '}';
     }
 }

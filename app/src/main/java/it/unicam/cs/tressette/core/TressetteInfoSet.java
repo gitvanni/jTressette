@@ -25,10 +25,11 @@
 package it.unicam.cs.tressette.core;
 
 import com.lostrucos.jabtbg.core.InformationSet;
+import it.unicam.cs.tressette.cards.Card;
+import it.unicam.cs.tressette.cards.Hand;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class TressetteInfoSet implements InformationSet<TressetteGameState,TressetteAction> {
     private int playerIndex;

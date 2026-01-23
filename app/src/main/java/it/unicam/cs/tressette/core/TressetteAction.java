@@ -25,6 +25,7 @@
 package it.unicam.cs.tressette.core;
 
 import com.lostrucos.jabtbg.core.Action;
+import it.unicam.cs.tressette.cards.Card;
 
 import java.util.Objects;
 
@@ -60,5 +61,13 @@ public class TressetteAction implements Action {
     @Override
     public int hashCode() {
         return Objects.hash(player, card);
+    }
+
+    @Override
+    public String toString() {
+        return "TressetteAction{" +
+                "player=" + player +
+                ", card=" + card +
+                '}';
     }
 }

@@ -1,0 +1,72 @@
+/*
+ * MIT License
+ *
+ * Copyright (c) 2024 gitvanni
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+package it.unicam.cs.tressette.strategies;
+
+import com.lostrucos.jabtbg.core.Strategy;
+import it.unicam.cs.tressette.core.TressetteAction;
+import it.unicam.cs.tressette.core.TressetteGameState;
+import it.unicam.cs.tressette.core.TressetteStrategy;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class AdvancedTressetteStrategy implements Strategy<TressetteGameState, TressetteAction> {
+
+    private List<TressetteStrategy> strategies;
+
+    public AdvancedTressetteStrategy(){
+        strategies = Arrays.asList(
+                new StrongStrategy(),
+                new DefenceStrategy()
+        );
+    }
+    @Override
+    public double calculateUtility(TressetteGameState state, int playerIndex) {
+        return 0;
+    }
+
+    @Override
+    public List<TressetteAction> suggestStrategicMoves(TressetteGameState state, int currentPlayer) {
+        List<TressetteAction> suggestedMoves = new ArrayList<>();
+        if (state.getTable().isEmpty()) {
+            TressetteAction action = strategies.get(0).chooseAction(state);
+            if (action != null) {
+                suggestedMoves.add(action);
+                return suggestedMoves;
+            }else
+                return suggestedMoves;
+        }
+        /*
+        TressetteAction action = strategies.get(1).chooseAction(state);
+        if (action != null) {
+            suggestedMoves.add(action);
+            return suggestedMoves;
+        }
+
+         */
+        return state.getAvailableActions(currentPlayer);
+    }
+}

@@ -1,10 +1,6 @@
 package com.lostrucos.jabtbg.core;
 
 
-import it.unicam.cs.tressette.core.Card;
-
-import java.util.List;
-
 /**
  * Represents a player entity in the game.
  */

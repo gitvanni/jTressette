@@ -22,9 +22,13 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.tressette.core;
+package it.unicam.cs.tressette.strategies;
 
-import java.util.ArrayList;
+import it.unicam.cs.tressette.cards.Card;
+import it.unicam.cs.tressette.cards.Rank;
+import it.unicam.cs.tressette.cards.Suit;
+import it.unicam.cs.tressette.core.*;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +49,7 @@ public class HigherCardStrategy implements TressetteStrategy {
                     .orElse(null);
             Card toReturn = cards.stream()
                     .filter(card -> card.getSuit() == dominant) // Filter cards by the given suit
-                    .max(Comparator.comparing(Card::getRank,Rank.BY_VALUE)) // Find the card with the highest rank
+                    .max(Comparator.comparing(Card::getRank, Rank.BY_VALUE)) // Find the card with the highest rank
                     .orElse(null); // Return null if no cards are found for that suit
             return new TressetteAction(currentPlayer,toReturn);
         }
@@ -57,4 +61,11 @@ public class HigherCardStrategy implements TressetteStrategy {
                 .orElse(null); // Return null if no cards are found for that suit
         return new TressetteAction(currentPlayer,toReturn);
     }
+
+    @Override
+    public List<TressetteAction> getActions(TressetteGameState state) {
+        return null;
+    }
+
+
 }
